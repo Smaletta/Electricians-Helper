@@ -7,12 +7,14 @@ import RegularAngleBends from "@/components/RegularAngleBends";
 import LimitedSpaceAngleCalculator from "@/components/LimitedSpaceAngleCalculator";
 import { useState } from "react";
 import React from "react";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaProvider } from "react-native-safe-area-context";
 
 
 export default function Conduit() {
-    const { modalVisible, openModal, closeModal } = useConduitModal();
+    const { modalVisible, openModal } = useConduitModal();
     const [content, setContent] = useState(<></>);
+    
+
 
     const setActiveContent = (content: React.JSX.Element) => {
         setContent(content);

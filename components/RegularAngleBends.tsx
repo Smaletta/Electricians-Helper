@@ -4,28 +4,28 @@ import { ThemedView } from "@/components/ThemedView";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import * as  mathjs from "mathjs";
 import { useEffect, useState } from "react";
-import { StyleSheet, Touchable, TouchableOpacity } from "react-native";
+import { StyleSheet, TouchableOpacity } from "react-native";
 import { useConduitModal } from "@/context/ConduitBendingModal";
 import { Button } from "@react-navigation/elements";
 import useCheckForFloat from "@/hooks/useCheckForFloat";
 
 
 export default function RegularAngleBends() {
-    const [a, setA] = useState(0.0);
-    const [b, setB] = useState(0.0);
-    const [c, setC] = useState(0.0);
+    const [a, setA] = useState("");
+    const [b, setB] = useState("");
+    const [c, setC] = useState("");
     const { closeModal } = useConduitModal();
-    const [selectedButton, setSelectedButton] = useState(0);
+    const [selectedButton, setSelectedButton] = useState("");
 
     useEffect(() => {
-        if (a !== 0 && b !== 0) {
-            const result = a / mathjs.sin(mathjs.unit(b, "deg"));
+        if (parseFloat(a) !== 0 && parseFloat(b) !== 0) {
+            const result = parseFloat(a) / mathjs.sin(mathjs.unit(parseFloat(b), "deg"));
             console.log(result);
-            setC(Number(mathjs.round(result, 2)));
+            setC(String(mathjs.round(result, 2)));
         }
     }, [a, b, c]);
 
-    const changeSelectedButton = (angle: number) => {
+    const changeSelectedButton = (angle: string) => {
         setB(angle);
         setSelectedButton(angle);
         console.log(selectedButton);
@@ -56,39 +56,39 @@ export default function RegularAngleBends() {
                     <ThemedView style={styles.row}>
                         <ThemedText type="subtitle">Angle of Bend</ThemedText>
                         <TouchableOpacity
-                            style={selectedButton === parseInt("10") ? styles.selectedButton : styles.button}
-                            onPress={() => changeSelectedButton(10)}
+                            style={selectedButton === "10" ? styles.selectedButton : styles.button}
+                            onPress={() => changeSelectedButton("10")}
                         >
                             <ThemedText>10°</ThemedText>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            style={selectedButton === 22.5 ? styles.selectedButton : styles.button}
-                            onPress={() => changeSelectedButton(22.5)}
+                            style={selectedButton === "22.5" ? styles.selectedButton : styles.button}
+                            onPress={() => changeSelectedButton("22.5")}
                         >
                             <ThemedText>22.5°</ThemedText>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            style={selectedButton === 30 ? styles.selectedButton : styles.button}
-                            onPress={() => changeSelectedButton(30)}
+                            style={selectedButton === "30" ? styles.selectedButton : styles.button}
+                            onPress={() => changeSelectedButton("30")}
                         >
                             <ThemedText>30°</ThemedText>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            style={selectedButton === 45 ? styles.selectedButton : styles.button}
-                            onPress={() => changeSelectedButton(45)}
+                            style={selectedButton === "45" ? styles.selectedButton : styles.button}
+                            onPress={() => changeSelectedButton("45")}
                         >
                             <ThemedText>45°</ThemedText>
                         </TouchableOpacity>
                         <TouchableOpacity
-                            style={selectedButton === 60 ? styles.selectedButton : styles.button}
-                            onPress={() => changeSelectedButton(60)}
+                            style={selectedButton === "60" ? styles.selectedButton : styles.button}
+                            onPress={() => changeSelectedButton("60")}
                         >
                             <ThemedText>60°</ThemedText>
                         </TouchableOpacity>
                     </ThemedView>
                     <ThemedView style={styles.display}>
                         <ThemedText type="subtitle" style={{ padding: 10 }}>Distance Between Marks</ThemedText>
-                        <ThemedText type="subtitle" style={{ padding: 10 }}>{c}</ThemedText>
+                        <ThemedText type="subtitle" style={{ padding: 10 }}>{useCheckForFloat(c)}</ThemedText>
                     </ThemedView>
                 </ThemedView>
                 <Button onPress={closeModal}>

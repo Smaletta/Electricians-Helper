@@ -11,23 +11,23 @@ import useCheckForFloat from "@/hooks/useCheckForFloat";
 
 
 export default function LimitedSpaceAngleCalculator() {
-    const [a, setA] = useState(0.0);
-    const [b, setB] = useState(0.0);
-    const [c, setC] = useState(0.0);
-    const [angleA, setAngleA] = useState(0.0);
-    const [angleB, setAngleB] = useState(0.0);
+    const [a, setA] = useState("");
+    const [b, setB] = useState("");
+    const [c, setC] = useState("");
+    const [angleA, setAngleA] = useState("");
+    const [angleB, setAngleB] = useState("");
     const angleC = 90
     const { closeModal } = useConduitModal();
 
     useEffect(() => {
-        if (a !== 0 && b !== 0) {
-            const result = mathjs.sqrt(a * a + b * b);
+        if (parseFloat(a) !== 0 && parseFloat(b) !== 0) {
+            const result = mathjs.sqrt(parseFloat(a) * parseFloat(a) + parseFloat(b) * parseFloat(b));
             console.log("Distance Between Marks:", result);
-            setC(Number(mathjs.round(result, 2)));
-            const angleA = mathjs.atan(a / b) * (180 / Math.PI);
+            setC(String(mathjs.round(result, 2)));
+            const angleA = mathjs.atan(parseFloat(a) / parseFloat(b)) * (180 / Math.PI);
             console.log("Angle of Bend:", angleA);
-            setAngleA(Number(mathjs.round(angleA, 2)));
-            setAngleB(Number((90 - angleA)));
+            setAngleA(String(mathjs.round(angleA, 2)));
+            setAngleB(String((90 - angleA)));
         }
     }, [a, b, c, angleA]);
 
@@ -66,11 +66,11 @@ export default function LimitedSpaceAngleCalculator() {
                     </ThemedView>
                     <ThemedView style={styles.display}>
                         <ThemedText type="subtitle" style={{ padding: 10 }}>Distance Between Marks</ThemedText>
-                        <ThemedText type="subtitle" style={{ padding: 10 }}>{c}</ThemedText>
+                        <ThemedText type="subtitle" style={{ padding: 10 }}>{useCheckForFloat(c)}</ThemedText>
                     </ThemedView>
                     <ThemedView style={styles.display}>
                         <ThemedText type="subtitle" style={{ padding: 10 }}>Angle</ThemedText>
-                        <ThemedText type="subtitle" style={{ padding: 10 }}>{angleA}</ThemedText>
+                        <ThemedText type="subtitle" style={{ padding: 10 }}>{useCheckForFloat(angleA)}</ThemedText>
                     </ThemedView>
                 </ThemedView>
                 <Button onPress={closeModal}>

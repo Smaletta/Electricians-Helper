@@ -7,10 +7,10 @@ const DATA = [
   {
     title: "Electrical Formula",
     data: [
-      "V = I x R,  V = P / I,  V = √ P x R",
-      "I = V / R,  I = V / P,  I = √ P / R",
-      "R = V / I,  R = P / V²,  R = P / I²",
-      "P = V x I,  P = V² / R,  P = I² x R"
+      "V = I x R          V = P / I          V = √ P x R",
+      "I = V / R          I = P / V          I = √ P / R",
+      "R = V / I          R = P / V²          R = P / I²",
+      "P = V x I          P = V² / R          P = I² x R"
     ]
   },
   {

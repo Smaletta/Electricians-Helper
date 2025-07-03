@@ -11,19 +11,19 @@ import useCheckForFloat from "@/hooks/useCheckForFloat";
 
 
 export default function CustomAngleBends() {
-    const [a, setA] = useState(0.0);
-    const [b, setB] = useState(0.0);
-    const [c, setC] = useState(0.0);
-    const [angleA, setAngleA] = useState(0.0);
-    const [angleB, setAngleB] = useState(0.0);
+    const [a, setA] = useState("");
+    const [b, setB] = useState("");
+    const [c, setC] = useState("");
+    const [angleA, setAngleA] = useState("");
+    const [angleB, setAngleB] = useState("");
     const angleC = 90
     const { closeModal } = useConduitModal();
 
     useEffect(() => {
-        if (a !== 0 && b !== 0) {
-            const result = a / mathjs.sin(mathjs.unit(b, "deg"));
+        if (parseFloat(a) !== 0 && parseFloat(b) !== 0) {
+            const result = parseFloat(a) / mathjs.sin(mathjs.unit(parseFloat(b), "deg"));
             console.log(result);
-            setC(Number(mathjs.round(result, 2)));
+            setC(result.toFixed(2));
         }
     }, [a, b, c]);
 
