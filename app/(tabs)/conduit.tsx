@@ -7,7 +7,7 @@ import RegularAngleBends from "@/components/RegularAngleBends";
 import LimitedSpaceAngleCalculator from "@/components/LimitedSpaceAngleCalculator";
 import { useState } from "react";
 import React from "react";
-import { SafeAreaProvider } from "react-native-safe-area-context";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 
 export default function Conduit() {
@@ -37,6 +37,7 @@ export default function Conduit() {
 
     return (
         <SafeAreaProvider>
+            <SafeAreaView style={{ flex: 1 }}>
                 <ThemedView
                     style={{
                         flex: 1,
@@ -45,14 +46,16 @@ export default function Conduit() {
                     }}
                 >
                     <TouchableOpacity onPress={customAngleBends} style={styles.button}>
-                        <ThemedText>Custom Angle Bends</ThemedText>
+                        <ThemedText type="subtitle">Custom Angle Bends</ThemedText>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={regularAngleBends} style={styles.button}>
-                        <ThemedText>Regular Angle Bends</ThemedText>
+                        <ThemedText type="subtitle">Regular Angle Bends</ThemedText>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={limitedSpaceAngleCalculator} style={styles.button}>
-                        <ThemedText>Limited Space Angle Calculator</ThemedText>
+                        <ThemedText type="subtitle">Limited Space Angle Calculator</ThemedText>
                     </TouchableOpacity>
+                    </ThemedView>
+                </SafeAreaView>
                     <Modal
                         visible={modalVisible}
                         transparent={true}
@@ -61,7 +64,6 @@ export default function Conduit() {
                             {content}
                         </ThemedView>
                     </Modal>
-                </ThemedView>
         </SafeAreaProvider>
     );
 }

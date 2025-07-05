@@ -5,35 +5,35 @@ interface ModalProviderProps {
     children: ReactNode;
 }
 
-interface ConduitModalContextType {
+interface MotorModalContextType {
     modalVisible: boolean;
     openModal: () => void;
     closeModal: () => void;
 }
 
-const ConduitModalContext = createContext<ConduitModalContextType>({
+const MotorModalContext = createContext<MotorModalContextType>({
     modalVisible: false,
     openModal: () => console.log('Open modal not implemented'),
     closeModal: () => {},
 });
 
-export const ConduitModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
+export const MotorModalProvider: React.FC<ModalProviderProps> = ({ children }) => {
     const [modalVisible, setModalVisible] = useState(false);
 
     const openModal = () => {
-        console.log('Open conduit modal called');
+        console.log('Open motor modal called');
         setModalVisible(true);
     };
     const closeModal = () => {
-        console.log('Close conduit modal called');
+        console.log('Close motor modal called');
         setModalVisible(false);
     };
 
     return (
-        <ConduitModalContext.Provider value={{ modalVisible, openModal, closeModal }}>
+        <MotorModalContext.Provider value={{ modalVisible, openModal, closeModal }}>
             {children}
-        </ConduitModalContext.Provider>
+        </MotorModalContext.Provider>
     );
 };
 
-export const useConduitModal = () => useContext(ConduitModalContext);
+export const useMotorModal = () => useContext(MotorModalContext);

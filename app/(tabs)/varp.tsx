@@ -5,9 +5,10 @@ import { StyleSheet, TouchableOpacity } from "react-native";
 import { useEffect, useState } from "react";
 import * as mathjs from "mathjs";
 import useCheckForFloat from "@/hooks/useCheckForFloat";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 
 
-export default function VIRP() {
+export default function VARP() {
   const [V, setV] = useState('');
   const [I, setI] = useState('');
   const [R, setR] = useState('');
@@ -70,7 +71,7 @@ export default function VIRP() {
       currentSelection.push(button);
     };
     if (currentSelection.length < 2) {
-    currentSelection.push(button)
+      currentSelection.push(button)
     };
     if (currentSelection.length > 2) {
       currentSelection.shift();
@@ -85,73 +86,81 @@ export default function VIRP() {
 
 
   return (
-    <ThemedView
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <ThemedText type="subtitle">Voltage</ThemedText>
-      <ThemedView style={styles.row}>
-        <TouchableOpacity style={selectV === true ? styles.selectedButton : styles.button} onPress={() => select("V")}>
-          <ThemedText type="default">Select</ThemedText>
-        </TouchableOpacity>
-      <ThemedTextInput
-        style={styles.input}
-        editable = {selectV}
-        inputMode="decimal"
-        onChangeText={(text) => setV(text)}
-        value={useCheckForFloat(V)}
-        returnKeyType="done"
-      />
-      </ThemedView>
-      <ThemedText type="subtitle">Amperage</ThemedText>
-      <ThemedView style={styles.row}>
-        <TouchableOpacity style={selectI === true ? styles.selectedButton : styles.button} onPress={() => select("I")}>
-          <ThemedText type="default">Select</ThemedText>
-        </TouchableOpacity>
-      <ThemedTextInput
-        style={styles.input}
-        editable = {selectI}
-        inputMode="decimal"
-        onChangeText={(text) => setI(text)}
-        value={useCheckForFloat(I)}
-        returnKeyType="done"
-      />
-      </ThemedView>
-      <ThemedText type="subtitle">Resistance</ThemedText>
-      <ThemedView style={styles.row}>
-        <TouchableOpacity style={selectR === true ? styles.selectedButton : styles.button} onPress={() => select("R")}>
-          <ThemedText type="default">Select</ThemedText>
-        </TouchableOpacity>
-      <ThemedTextInput
-        style={styles.input}
-        editable = {selectR}
-        inputMode="decimal"
-        onChangeText={(text) => setR(text)}
-        value={useCheckForFloat(R)}
-        returnKeyType="done"
-      />
-      </ThemedView>
-      <ThemedText type="subtitle">Power</ThemedText>
-      <ThemedView style={styles.row}>
-        <TouchableOpacity style={selectP === true ? styles.selectedButton : styles.button} onPress={() => select("P")}>
-          <ThemedText type="default">Select</ThemedText>
-        </TouchableOpacity>
-        <ThemedTextInput
-          style={styles.input}
-          editable = {selectP}
-          inputMode="decimal"
-          onChangeText={(text) => setP(text)}
-          value={useCheckForFloat(P)}
-          returnKeyType="done"
-        />
-      </ThemedView>
-      <TouchableOpacity style={styles.button} onPress={Clear}>
-        <ThemedText type="subtitle">Clear</ThemedText>
-      </TouchableOpacity>
-    </ThemedView >
+    <SafeAreaProvider>
+      <SafeAreaView style={{ flex: 1 }}>
+        <ThemedView
+          style={{
+            flex: 1,
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          <ThemedView style={styles.display}>
+            <ThemedText type="title">VARP</ThemedText>
+            <ThemedText type='default' style={{padding: 20}}>Select two of the following to calculate the other two</ThemedText>
+          </ThemedView>
+          <ThemedText type="subtitle">Voltage</ThemedText>
+          <ThemedView style={styles.row}>
+            <TouchableOpacity style={selectV === true ? styles.selectedButton : styles.button} onPress={() => select("V")}>
+              <ThemedText type="default">Select</ThemedText>
+            </TouchableOpacity>
+            <ThemedTextInput
+              style={styles.input}
+              editable={selectV}
+              inputMode="decimal"
+              onChangeText={(text) => setV(text)}
+              value={useCheckForFloat(V)}
+              returnKeyType="done"
+            />
+          </ThemedView>
+          <ThemedText type="subtitle">Amperage</ThemedText>
+          <ThemedView style={styles.row}>
+            <TouchableOpacity style={selectI === true ? styles.selectedButton : styles.button} onPress={() => select("I")}>
+              <ThemedText type="default">Select</ThemedText>
+            </TouchableOpacity>
+            <ThemedTextInput
+              style={styles.input}
+              editable={selectI}
+              inputMode="decimal"
+              onChangeText={(text) => setI(text)}
+              value={useCheckForFloat(I)}
+              returnKeyType="done"
+            />
+          </ThemedView>
+          <ThemedText type="subtitle">Resistance</ThemedText>
+          <ThemedView style={styles.row}>
+            <TouchableOpacity style={selectR === true ? styles.selectedButton : styles.button} onPress={() => select("R")}>
+              <ThemedText type="default">Select</ThemedText>
+            </TouchableOpacity>
+            <ThemedTextInput
+              style={styles.input}
+              editable={selectR}
+              inputMode="decimal"
+              onChangeText={(text) => setR(text)}
+              value={useCheckForFloat(R)}
+              returnKeyType="done"
+            />
+          </ThemedView>
+          <ThemedText type="subtitle">Power</ThemedText>
+          <ThemedView style={styles.row}>
+            <TouchableOpacity style={selectP === true ? styles.selectedButton : styles.button} onPress={() => select("P")}>
+              <ThemedText type="default">Select</ThemedText>
+            </TouchableOpacity>
+            <ThemedTextInput
+              style={styles.input}
+              editable={selectP}
+              inputMode="decimal"
+              onChangeText={(text) => setP(text)}
+              value={useCheckForFloat(P)}
+              returnKeyType="done"
+            />
+          </ThemedView>
+          <TouchableOpacity style={styles.button} onPress={Clear}>
+            <ThemedText type="subtitle">Clear</ThemedText>
+          </TouchableOpacity>
+        </ThemedView >
+      </SafeAreaView>
+    </SafeAreaProvider>
   );
 }
 

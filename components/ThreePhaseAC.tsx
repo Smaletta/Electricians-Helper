@@ -2,67 +2,72 @@ import { ThemedText } from "@/components/ThemedText";
 import { ThemedView } from "@/components/ThemedView";
 import { ThemedTextInput } from "@/components/ThemedTextInput";
 import { StyleSheet, TouchableOpacity } from "react-native";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import * as mathjs from "mathjs";
 import useCheckForFloat from "@/hooks/useCheckForFloat";
-import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
+import { Button } from "@react-navigation/elements";
+import { useMotorModal } from "@/context/MotorCalculationModal";
 
-
-export default function Transformer() {
+export default function ThreePhaseAC() {
+  const { closeModal } = useMotorModal();
   const [V, setV] = useState('');
   const [I, setI] = useState('');
-  const [VS, setVS] = useState('');
-  const [IS, setIS] = useState('');
+  const [R, setR] = useState('');
   const [P, setP] = useState('');
+  const [PF, setPF] = useState('');
+  const [EF, setEF] = useState('');
 
-  const [selectSinglePhase, setSelectSinglePhase] = useState(false);
-  const [selectThreePhase, setSelectThreePhase] = useState(false);
   const [selectV, setSelectV] = useState(false);
   const [selectI, setSelectI] = useState(false);
-  const [selectVS, setSelectVS] = useState(false);
-  const [selectIS, setSelectIS] = useState(false);  
+  const [selectR, setSelectR] = useState(false);
   const [selectP, setSelectP] = useState(false);
+  const [selectPF, setSelectPF] = useState(false);
+  const [selectEF, setSelectEF] = useState(false);
 
   const [selection, setSelection] = useState<string[]>([]);
 
   useEffect(() => {
     if (selectV && selectI) {
+      setR(String(parseFloat(V) / parseFloat(I)));
+      setP(String(parseFloat(V) * parseFloat(I)));
     }
-    else if (selectV && selectVS) {
+    else if (selectV && selectR) {
+      setI(String(parseFloat(V) / parseFloat(R)));
+      setP(String(parseFloat(V) ** 2 * parseFloat(R)));
     }
     else if (selectV && selectP) {
+      setI(String(parseFloat(P) / parseFloat(V)));
+      setR(String(parseFloat(P) / parseFloat(V) ** 2));
     }
-    else if (selectI && selectVS) {
+    else if (selectI && selectR) {
+      setV(String(parseFloat(I) * parseFloat(R)));
+      setP(String(parseFloat(I) ** 2 * parseFloat(R)));
     }
     else if (selectI && selectP) {
+      setV(String(parseFloat(P) / parseFloat(I)));
+      setR(String(parseFloat(P) / parseFloat(I) ** 2));
     }
-    else if (selectVS && selectP) {
+    else if (selectR && selectP) {
+      setV(String(mathjs.sqrt(parseFloat(P) * parseFloat(R))));
+      setI(String(mathjs.sqrt(parseFloat(P) / parseFloat(R))));
     }
-  }, [V, I, VS, IS, P]);
+  }, [V, I, R, P]);
 
   function Clear() {
     setV('');
     setI('');
-    setVS('');
-    setIS('');
+    setR('');
     setP('');
+    setPF('');
+    setEF('');
     setSelectV(false);
     setSelectI(false);
-    setSelectVS(false);
-    setSelectIS(false);
+    setSelectR(false);
     setSelectP(false);
+    setSelectPF(false);
+    setSelectEF(false);
     setSelection([]);
-  }
-
-  function selectPhase(button: string) {
-    if (button === 'Single') {
-      setSelectSinglePhase(true);
-      setSelectThreePhase(false);
-    }
-    else if (button === 'Three') {
-      setSelectSinglePhase(false);
-      setSelectThreePhase(true);
-    }
   }
 
   function select(button: string) {
@@ -84,8 +89,10 @@ export default function Transformer() {
     setSelection(currentSelection);
     setSelectV(currentSelection.includes('V'));
     setSelectI(currentSelection.includes('I'));
-    setSelectVS(currentSelection.includes('VS'));
-    setSelectIS(currentSelection.includes('IS'));
+    setSelectR(currentSelection.includes('R'));
+    setSelectP(currentSelection.includes('P'));
+    setSelectPF(currentSelection.includes('PF'));
+    setSelectEF(currentSelection.includes('EF'));
     console.log(selection);
   }
 
@@ -100,19 +107,7 @@ export default function Transformer() {
             alignItems: "center",
           }}
         >
-          <ThemedView style={styles.display}>
-            <ThemedText type="title">Transformers</ThemedText>
-            <ThemedView style={styles.row}>
-            <TouchableOpacity style={selectSinglePhase === true ? styles.selectedButton : styles.button} onPress={() => selectPhase("Single")}>
-              <ThemedText type="default">Single Phase</ThemedText>
-            </TouchableOpacity>
-            <TouchableOpacity style={selectThreePhase === true ? styles.selectedButton : styles.button} onPress={() => selectPhase("Three")}>
-              <ThemedText type="default">Three Phase</ThemedText>
-            </TouchableOpacity>
-            </ThemedView>
-            <ThemedText type='default' style={{padding: 20}}>Select two of the following to calculate the other two</ThemedText>
-          </ThemedView>
-          <ThemedText type="subtitle">Primary Voltage</ThemedText>
+          <ThemedText type="subtitle">Voltage</ThemedText>
           <ThemedView style={styles.row}>
             <TouchableOpacity style={selectV === true ? styles.selectedButton : styles.button} onPress={() => select("V")}>
               <ThemedText type="default">Select</ThemedText>
@@ -126,7 +121,7 @@ export default function Transformer() {
               returnKeyType="done"
             />
           </ThemedView>
-          <ThemedText type="subtitle">Primary FLA</ThemedText>
+          <ThemedText type="subtitle">Amperage</ThemedText>
           <ThemedView style={styles.row}>
             <TouchableOpacity style={selectI === true ? styles.selectedButton : styles.button} onPress={() => select("I")}>
               <ThemedText type="default">Select</ThemedText>
@@ -140,45 +135,45 @@ export default function Transformer() {
               returnKeyType="done"
             />
           </ThemedView>
-          <ThemedText type="subtitle">Secondary Voltage</ThemedText>
+          <ThemedText type="subtitle">Resistance</ThemedText>
           <ThemedView style={styles.row}>
-            <TouchableOpacity style={selectVS === true ? styles.selectedButton : styles.button} onPress={() => select("VS")}>
+            <TouchableOpacity style={selectR === true ? styles.selectedButton : styles.button} onPress={() => select("R")}>
               <ThemedText type="default">Select</ThemedText>
             </TouchableOpacity>
             <ThemedTextInput
               style={styles.input}
-              editable={selectVS}
+              editable={selectR}
               inputMode="decimal"
-              onChangeText={(text) => setVS(text)}
-              value={useCheckForFloat(VS)}
+              onChangeText={(text) => setR(text)}
+              value={useCheckForFloat(R)}
               returnKeyType="done"
             />
           </ThemedView>
-                    <ThemedText type="subtitle">Secondary FLA</ThemedText>
-          <ThemedView style={styles.row}>
-            <TouchableOpacity style={selectIS === true ? styles.selectedButton : styles.button} onPress={() => select("IS")}>
-              <ThemedText type="default">Select</ThemedText>
-            </TouchableOpacity>
-            <ThemedTextInput
-              style={styles.input}
-              editable={selectIS}
-              inputMode="decimal"
-              onChangeText={(text) => setIS(text)}
-              value={useCheckForFloat(IS)}
-              returnKeyType="done"
-            />
-          </ThemedView>
-          <ThemedText type="subtitle">Transformer Rating in KVA</ThemedText>
+          <ThemedText type="subtitle">Power</ThemedText>
           <ThemedView style={styles.row}>
             <TouchableOpacity style={selectP === true ? styles.selectedButton : styles.button} onPress={() => select("P")}>
               <ThemedText type="default">Select</ThemedText>
             </TouchableOpacity>
             <ThemedTextInput
               style={styles.input}
-              editable
+              editable={selectP}
               inputMode="decimal"
               onChangeText={(text) => setP(text)}
               value={useCheckForFloat(P)}
+              returnKeyType="done"
+            />
+          </ThemedView>
+          <ThemedText type="subtitle">Power Factor</ThemedText>
+          <ThemedView style={styles.row}>
+            <TouchableOpacity style={selectPF === true ? styles.selectedButton : styles.button} onPress={() => select("PF")}>
+              <ThemedText type="default">Select</ThemedText>
+            </TouchableOpacity>
+            <ThemedTextInput
+              style={styles.input}
+              editable={selectPF}
+              inputMode="decimal"
+              onChangeText={(text) => setPF(text)}
+              value={useCheckForFloat(PF)}
               returnKeyType="done"
             />
           </ThemedView>
@@ -186,44 +181,47 @@ export default function Transformer() {
             <ThemedText type="subtitle">Clear</ThemedText>
           </TouchableOpacity>
         </ThemedView >
+        <Button onPress={closeModal}>
+          Close
+        </Button>
       </SafeAreaView>
     </SafeAreaProvider>
   );
 }
-
-
-const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: 'center', alignItems: 'center' },
-  text: { fontSize: 18, marginBottom: 10 },
-  input: {
-    borderWidth: 1,
-    borderColor: '#ccc',
-    padding: 10,
-    width: '75%',
-  },
-  row: {
-    width: '100%',
-    flexDirection: 'row',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: 10,
-  },
-  display: {
-    width: '100%',
-    alignItems: 'center',
-    justifyContent: 'space-between',
-    padding: 10,
-  },
-  button: {
-    backgroundColor: '#007AFF',
-    padding: 10,
-    borderRadius: 20,
-    alignItems: 'center',
-  },
-  selectedButton: {
-    backgroundColor: '#003366',
-    padding: 10,
-    borderRadius: 20,
-    alignItems: 'center',
-  },
-});
+    
+    
+    const styles = StyleSheet.create({
+      container: { flex: 1, justifyContent: 'center', alignItems: 'center' },
+      text: { fontSize: 18, marginBottom: 10 },
+      input: {
+        borderWidth: 1,
+        borderColor: '#ccc',
+        padding: 10,
+        width: '75%',
+      },
+      row: {
+        width: '100%',
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: 10,
+      },
+      display: {
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        padding: 10,
+      },
+      button: {
+        backgroundColor: '#007AFF',
+        padding: 10,
+        borderRadius: 20,
+        alignItems: 'center',
+      },
+      selectedButton: {
+        backgroundColor: '#003366',
+        padding: 10,
+        borderRadius: 20,
+        alignItems: 'center',
+      },
+    });
