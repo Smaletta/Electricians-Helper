@@ -1,17 +1,17 @@
 import { ThemedView } from "@/components/ThemedView";
 import { ThemedText } from "@/components/ThemedText";
 import { Modal, StyleSheet, TouchableOpacity } from "react-native";
-import { useMotorModal } from "@/context/MotorCalculationModal";
-import DCMotor from "@/components/DCMotor";
-import SinglePhaseAC from "@/components/SinglePhaseAC";
-import ThreePhaseAC from "@/components/ThreePhaseAC";
+import { useConduitModal } from "@/context/ConduitBendingModal";
 import { useState } from "react";
 import React from "react";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import VoltageDrop from "@/components/VoltageDrop";
+import WireAmperage from "@/components/WireAmperage";
+import ConduitFill from "@/components/ConduitFill";
 
 
-export default function Motor() {
-    const { modalVisible, openModal } = useMotorModal();
+export default function Conduit() {
+    const { modalVisible, openModal } = useConduitModal();
     const [content, setContent] = useState(<></>);
     
 
@@ -20,18 +20,18 @@ export default function Motor() {
         setContent(content);
     };
 
-    const DCMotorButton = () => {
-        setActiveContent(<DCMotor />);
+    const voltageDrop = () => {
+        setActiveContent(<VoltageDrop />);
         openModal();
     };
 
-    const SinglePhaseACButton = () => {
-        setActiveContent(<SinglePhaseAC />);
+    const wireAmperage = () => {
+        setActiveContent(<WireAmperage />);
         openModal();
     };
 
-    const ThreePhaseACButton = () => {
-        setActiveContent(<ThreePhaseAC />);
+    const conduitFill = () => {
+        setActiveContent(<ConduitFill />);
         openModal();
     }
 
@@ -45,14 +45,14 @@ export default function Motor() {
                         alignItems: "center",
                     }}
                 >
-                    <TouchableOpacity onPress={DCMotorButton} style={styles.button}>
-                        <ThemedText type="subtitle">DC Motor</ThemedText>
+                    <TouchableOpacity onPress={voltageDrop} style={styles.button}>
+                        <ThemedText type="subtitle">Voltage Drop Calculator</ThemedText>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={SinglePhaseACButton} style={styles.button}>
-                        <ThemedText type="subtitle">Single Phase AC</ThemedText>
+                    <TouchableOpacity onPress={wireAmperage} style={styles.button}>
+                        <ThemedText type="subtitle">Wire Amperage Calculator</ThemedText>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={ThreePhaseACButton} style={styles.button}>
-                        <ThemedText type="subtitle">Three Phase AC</ThemedText>
+                    <TouchableOpacity onPress={conduitFill} style={styles.button}>
+                        <ThemedText type="subtitle">Conduit Fill Calculator</ThemedText>
                     </TouchableOpacity>
                     </ThemedView>
                 </SafeAreaView>

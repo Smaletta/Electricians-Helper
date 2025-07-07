@@ -20,6 +20,18 @@ const DATA = [
     ]
   },
   {
+    title: "EMT Conduit Stub Up Adjustment",
+    data: [
+      "1/2′′ = 5′′          3/4′′ = 6′′          1′′ = 8′′          1 1/4′′ = 11′′"
+    ]
+  },
+  {
+    title: "Rigid Conduit Stub Up Adjustment",
+    data: [
+      "1/2′′ = 6′′          3/4′′ = 9′′          1′′ = 11′′"
+    ]
+  },
+  {
     title: "Other",
     data: [
       "Horsepower multiplier = 746",

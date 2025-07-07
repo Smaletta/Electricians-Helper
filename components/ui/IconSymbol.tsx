@@ -20,7 +20,7 @@ const MAPPING = {
   'house.fill': 'home',
   'arrow.swap': 'trending-up',
   'bolt.fill': 'flash-outline',
-  'gear': 'cog-outline',
+  'arrow.2.circlepath': 'infinite',
   'arrowtriangle.up' : 'triangle-outline'
 } as IconMapping;
 

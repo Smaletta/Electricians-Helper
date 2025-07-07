@@ -17,28 +17,43 @@ export default function Transformer() {
 
   const [selectSinglePhase, setSelectSinglePhase] = useState(false);
   const [selectThreePhase, setSelectThreePhase] = useState(false);
-  const [selectV, setSelectV] = useState(false);
   const [selectI, setSelectI] = useState(false);
-  const [selectVS, setSelectVS] = useState(false);
-  const [selectIS, setSelectIS] = useState(false);  
+  const [selectIS, setSelectIS] = useState(false);
   const [selectP, setSelectP] = useState(false);
 
   const [selection, setSelection] = useState<string[]>([]);
 
   useEffect(() => {
-    if (selectV && selectI) {
+    if (selectSinglePhase) {
+
+      if (selectI) {
+        setIS(String(parseFloat(V)/parseFloat(VS)*parseFloat(I)));
+        setP(String(parseFloat(V)*parseFloat(I)));
+      }
+      else if (selectIS) {
+        setI(String(parseFloat(VS)/parseFloat(V)*parseFloat(IS)));
+        setP(String(parseFloat(VS)*parseFloat(IS)));
+      }
+      else if (selectP) {
+        setI(String(parseFloat(P)/parseFloat(V)));
+        setIS(String(parseFloat(P)/parseFloat(VS)));
+      }
     }
-    else if (selectV && selectVS) {
-    }
-    else if (selectV && selectP) {
-    }
-    else if (selectI && selectVS) {
-    }
-    else if (selectI && selectP) {
-    }
-    else if (selectVS && selectP) {
-    }
-  }, [V, I, VS, IS, P]);
+    else if (selectThreePhase) {
+        if (selectI) {
+          setIS(String(mathjs.round(parseFloat(V)/parseFloat(VS)*parseFloat(I), 2)));
+          setP(String(mathjs.round(parseFloat(V)*parseFloat(I)*3, 2)));
+        }
+        else if (selectIS) {
+          setI(String(mathjs.round(parseFloat(VS)/parseFloat(V)*parseFloat(IS), 2)));
+          setP(String(mathjs.round(parseFloat(VS)*parseFloat(IS)*3, 2)));
+        }
+        else if (selectP) {
+          setI(String(mathjs.round(parseFloat(P)/parseFloat(V)/3, 2)));
+          setIS(String(mathjs.round(parseFloat(P)/parseFloat(VS)/3, 2)));
+        }
+      }
+    }, [V, I, VS, IS, P]);
 
   function Clear() {
     setV('');
@@ -46,9 +61,7 @@ export default function Transformer() {
     setVS('');
     setIS('');
     setP('');
-    setSelectV(false);
     setSelectI(false);
-    setSelectVS(false);
     setSelectIS(false);
     setSelectP(false);
     setSelection([]);
@@ -71,21 +84,20 @@ export default function Transformer() {
       return
     }
     console.log(currentSelection.length);
-    if (currentSelection.length == 2) {
+    if (currentSelection.length == 1) {
       currentSelection.shift();
       currentSelection.push(button);
     };
-    if (currentSelection.length < 2) {
+    if (currentSelection.length < 1) {
       currentSelection.push(button)
     };
-    if (currentSelection.length > 2) {
+    if (currentSelection.length > 1) {
       currentSelection.shift();
     };
     setSelection(currentSelection);
-    setSelectV(currentSelection.includes('V'));
     setSelectI(currentSelection.includes('I'));
-    setSelectVS(currentSelection.includes('VS'));
     setSelectIS(currentSelection.includes('IS'));
+    setSelectP(currentSelection.includes('P'));
     console.log(selection);
   }
 
@@ -103,30 +115,38 @@ export default function Transformer() {
           <ThemedView style={styles.display}>
             <ThemedText type="title">Transformers</ThemedText>
             <ThemedView style={styles.row}>
-            <TouchableOpacity style={selectSinglePhase === true ? styles.selectedButton : styles.button} onPress={() => selectPhase("Single")}>
-              <ThemedText type="default">Single Phase</ThemedText>
-            </TouchableOpacity>
-            <TouchableOpacity style={selectThreePhase === true ? styles.selectedButton : styles.button} onPress={() => selectPhase("Three")}>
-              <ThemedText type="default">Three Phase</ThemedText>
-            </TouchableOpacity>
+              <TouchableOpacity style={selectSinglePhase === true ? styles.selectedButton : styles.button} onPress={() => selectPhase("Single")}>
+                <ThemedText type="default">Single Phase</ThemedText>
+              </TouchableOpacity>
+              <TouchableOpacity style={selectThreePhase === true ? styles.selectedButton : styles.button} onPress={() => selectPhase("Three")}>
+                <ThemedText type="default">Three Phase</ThemedText>
+              </TouchableOpacity>
             </ThemedView>
-            <ThemedText type='default' style={{padding: 20}}>Select two of the following to calculate the other two</ThemedText>
+            <ThemedText type='default' style={{ padding: 20, textAlign: 'center' }}>Both primary and secondary voltages are required.{'\n'}Use a single selection to calculate the other two.</ThemedText>
           </ThemedView>
-          <ThemedText type="subtitle">Primary Voltage</ThemedText>
-          <ThemedView style={styles.row}>
-            <TouchableOpacity style={selectV === true ? styles.selectedButton : styles.button} onPress={() => select("V")}>
-              <ThemedText type="default">Select</ThemedText>
-            </TouchableOpacity>
+          <ThemedText type="subtitle">Primary {selectThreePhase && "Phase"} Voltage</ThemedText>
+          <ThemedView style={styles.display}>
             <ThemedTextInput
               style={styles.input}
-              editable={selectV}
+              editable
               inputMode="decimal"
               onChangeText={(text) => setV(text)}
               value={useCheckForFloat(V)}
               returnKeyType="done"
             />
           </ThemedView>
-          <ThemedText type="subtitle">Primary FLA</ThemedText>
+          <ThemedText type="subtitle">Secondary {selectThreePhase && "Phase"} Voltage</ThemedText>
+          <ThemedView style={styles.display}>
+            <ThemedTextInput
+              style={styles.input}
+              editable
+              inputMode="decimal"
+              onChangeText={(text) => setVS(text)}
+              value={useCheckForFloat(VS)}
+              returnKeyType="done"
+            />
+          </ThemedView>
+          <ThemedText type="subtitle">Primary {selectThreePhase && "Phase"} Current</ThemedText>
           <ThemedView style={styles.row}>
             <TouchableOpacity style={selectI === true ? styles.selectedButton : styles.button} onPress={() => select("I")}>
               <ThemedText type="default">Select</ThemedText>
@@ -140,21 +160,7 @@ export default function Transformer() {
               returnKeyType="done"
             />
           </ThemedView>
-          <ThemedText type="subtitle">Secondary Voltage</ThemedText>
-          <ThemedView style={styles.row}>
-            <TouchableOpacity style={selectVS === true ? styles.selectedButton : styles.button} onPress={() => select("VS")}>
-              <ThemedText type="default">Select</ThemedText>
-            </TouchableOpacity>
-            <ThemedTextInput
-              style={styles.input}
-              editable={selectVS}
-              inputMode="decimal"
-              onChangeText={(text) => setVS(text)}
-              value={useCheckForFloat(VS)}
-              returnKeyType="done"
-            />
-          </ThemedView>
-                    <ThemedText type="subtitle">Secondary FLA</ThemedText>
+          <ThemedText type="subtitle">Secondary {selectThreePhase && "Phase"} Current</ThemedText>
           <ThemedView style={styles.row}>
             <TouchableOpacity style={selectIS === true ? styles.selectedButton : styles.button} onPress={() => select("IS")}>
               <ThemedText type="default">Select</ThemedText>
@@ -168,14 +174,14 @@ export default function Transformer() {
               returnKeyType="done"
             />
           </ThemedView>
-          <ThemedText type="subtitle">Transformer Rating in KVA</ThemedText>
+          <ThemedText type="subtitle">Transformer Rating</ThemedText>
           <ThemedView style={styles.row}>
             <TouchableOpacity style={selectP === true ? styles.selectedButton : styles.button} onPress={() => select("P")}>
               <ThemedText type="default">Select</ThemedText>
             </TouchableOpacity>
             <ThemedTextInput
               style={styles.input}
-              editable
+              editable={selectP}
               inputMode="decimal"
               onChangeText={(text) => setP(text)}
               value={useCheckForFloat(P)}

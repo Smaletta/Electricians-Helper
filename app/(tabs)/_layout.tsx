@@ -7,14 +7,12 @@ import TabBarBackground from '@/components/ui/TabBarBackground';
 import { Colors } from '@/constants/Colors';
 import { useColorScheme } from '@/hooks/useColorScheme';
 import { ConduitModalProvider } from '@/context/ConduitBendingModal';
-import { MotorModalProvider } from '@/context/MotorCalculationModal';
 
 export default function TabLayout() {
     const colorScheme = useColorScheme();
 
     return (
         <ConduitModalProvider>
-        <MotorModalProvider>
         <Tabs
             screenOptions={{
                 tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
@@ -51,10 +49,10 @@ export default function TabLayout() {
                 }}
             />
             <Tabs.Screen
-                name="motor"
+                name="wires"
                 options={{
-                    title: 'Motor',
-                    tabBarIcon: ({ color }) => <IconSymbol size={28} name="gear" color={color} />,
+                    title: 'Wires',
+                    tabBarIcon: ({ color }) => <IconSymbol size={28} name="arrow.2.circlepath" color={color} />,
                 }}
             />
             <Tabs.Screen
@@ -65,7 +63,6 @@ export default function TabLayout() {
                 }}
             />
         </Tabs>
-        </MotorModalProvider>
         </ConduitModalProvider>
     );
 }
