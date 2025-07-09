@@ -148,43 +148,43 @@ export default function VoltageDrop() {
                             style={selectedButton === "14 AWG" ? styles.selectedButton : styles.button}
                             onPress={() => changeSelectedButton("14 AWG")}
                         >
-                            <ThemedText>14</ThemedText>
+                            <ThemedText>14 </ThemedText>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={selectedButton === "12 AWG" ? styles.selectedButton : styles.button}
                             onPress={() => changeSelectedButton("12 AWG")}
                         >
-                            <ThemedText>12</ThemedText>
+                            <ThemedText>12 </ThemedText>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={selectedButton === "10 AWG" ? styles.selectedButton : styles.button}
                             onPress={() => changeSelectedButton("10 AWG")}
                         >
-                            <ThemedText>10</ThemedText>
+                            <ThemedText>10 </ThemedText>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={selectedButton === "8 AWG" ? styles.selectedButton : styles.button}
                             onPress={() => changeSelectedButton("8 AWG")}
                         >
-                            <ThemedText>8</ThemedText>
+                            <ThemedText> 8 </ThemedText>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={selectedButton === "6 AWG" ? styles.selectedButton : styles.button}
                             onPress={() => changeSelectedButton("6 AWG")}
                         >
-                            <ThemedText>6</ThemedText>
+                            <ThemedText> 6 </ThemedText>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={selectedButton === "4 AWG" ? styles.selectedButton : styles.button}
                             onPress={() => changeSelectedButton("4 AWG")}
                         >
-                            <ThemedText>4</ThemedText>
+                            <ThemedText> 4 </ThemedText>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={selectedButton === "2 AWG" ? styles.selectedButton : styles.button}
                             onPress={() => changeSelectedButton("2 AWG")}
                         >
-                            <ThemedText>2</ThemedText>
+                            <ThemedText> 2 </ThemedText>
                         </TouchableOpacity>
                         <TouchableOpacity
                             style={selectedButton === "1/0 AWG" ? styles.selectedButton : styles.button}
@@ -256,14 +256,14 @@ const styles = StyleSheet.create({
     button: {
         backgroundColor: '#007AFF',
         padding: 10,
-        borderRadius: 5,
+        borderRadius: 20,
         alignItems: 'center',
 
     },
     selectedButton: {
         backgroundColor: '#003366',
         padding: 10,
-        borderRadius: 5,
+        borderRadius: 20,
         alignItems: 'center',
     },
     display: {

@@ -6,7 +6,7 @@ import { useState } from "react";
 import React from "react";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import VoltageDrop from "@/components/VoltageDrop";
-import WireAmperage from "@/components/WireAmperage";
+import WireSizingAndDerating from "@/components/WireSizingAndDerating";
 import ConduitFill from "@/components/ConduitFill";
 
 
@@ -25,8 +25,8 @@ export default function Conduit() {
         openModal();
     };
 
-    const wireAmperage = () => {
-        setActiveContent(<WireAmperage />);
+    const wireSizingAndDerating = () => {
+        setActiveContent(<WireSizingAndDerating />);
         openModal();
     };
 
@@ -48,8 +48,8 @@ export default function Conduit() {
                     <TouchableOpacity onPress={voltageDrop} style={styles.button}>
                         <ThemedText type="subtitle">Voltage Drop Calculator</ThemedText>
                     </TouchableOpacity>
-                    <TouchableOpacity onPress={wireAmperage} style={styles.button}>
-                        <ThemedText type="subtitle">Wire Amperage Calculator</ThemedText>
+                    <TouchableOpacity onPress={wireSizingAndDerating} style={styles.button}>
+                        <ThemedText type="subtitle">Wire Sizing And Derating</ThemedText>
                     </TouchableOpacity>
                     <TouchableOpacity onPress={conduitFill} style={styles.button}>
                         <ThemedText type="subtitle">Conduit Fill Calculator</ThemedText>
