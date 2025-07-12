@@ -3,7 +3,7 @@ import { ThemedTextInput } from "@/components/ThemedTextInput";
 import { ThemedView } from "@/components/ThemedView";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import * as  mathjs from "mathjs";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { StyleSheet, TouchableOpacity, Switch } from "react-native";
 import { useConduitModal } from "@/context/ConduitBendingModal";
 import { Button } from "@react-navigation/elements";

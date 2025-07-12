@@ -1,6 +1,10 @@
-# Welcome to your Expo app 👋
+# Electricians-Helper App
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A comprehensive web application designed to assist electricians with various electrical calculations and tasks.
+
+## Overview
+
+The Electricians-Helper App is a tool for electricians to quickly and accurately perform a wide range of electrical calculations and tasks. The app includes multiple features, each designed to simplify and streamline common electrical tasks.
 
 ## Get started
 
@@ -16,35 +20,31 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
    npx expo start
    ```
 
-In the output, you'll find options to open the app in a
+## Features
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+- Conduit Bending Calculators: Calculate conduit sizes and bending angles for commonly used angles and custom angles.
+- Voltage/Amperage/Resistance/Power Calculator: Calculate voltage, amperage, resistance, and power for electrical circuits.
+- Voltage Drop Maximum Lengths: Calculate the maximum length of wire for a given voltage drop.
+- Wire Sizing and Derating: Calculate wire sizes and derating factors for electrical circuits.
+- Conduit Fill Calculator: Calculate the correct conduit size for a given number of wires.
+- Transformer Calculator: Calculate transformer sizes and configurations for single and three phase electrical systems.
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+## Usage
 
-## Get a fresh project
+1. Select the desired feature from the main menu.
+2. Enter the required input values for the selected feature.
+3. Click "Calculate" to generate the results.
 
-When you're ready, run:
+## Technical Details
 
-```bash
-npm run reset-project
-```
+- Built using TypeScript and React
+- Utilizes proprietary calculation algorithms for accurate results
+- Compatible with modern web browsers
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## Contributing
 
-## Learn more
+Contributions to the Electricians-Helper App are welcome! If you have suggestions or bug reports, please open an issue on this repository. If you'd like to contribute code, please fork the repository and submit a pull request.
 
-To learn more about developing your project with Expo, look at the following resources:
+## License
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
-
-## Join the community
-
-Join our community of developers creating universal apps.
-
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+The Electricians-Helper App is licensed under the MIT License. See LICENSE.md for details.
