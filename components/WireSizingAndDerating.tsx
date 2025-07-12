@@ -5,7 +5,7 @@ import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import * as  mathjs from "mathjs";
 import { useState } from "react";
 import { StyleSheet, TouchableOpacity, Switch } from "react-native";
-import { useConduitModal } from "@/context/ConduitBendingModal";
+import { useWireModal } from "@/context/WireCalcModal";
 import { Button } from "@react-navigation/elements";
 import useCheckForFloat from "@/hooks/useCheckForFloat";
 import { AmbientTemperatureDerating, WireSizeCopper, WireSizeAluminum } from "@/data/WireSizeTables";
@@ -21,7 +21,7 @@ export default function WireSizingAndDerating() {
     const [NumberOfConductors, setNumberOfConductors] = useState("");
     const [WireSize, setWireSize] = useState("");
 
-    const { closeModal } = useConduitModal();
+    const { closeModal } = useWireModal();
 
     function WireSizeCalculation() {
         var Amp = Number(A);

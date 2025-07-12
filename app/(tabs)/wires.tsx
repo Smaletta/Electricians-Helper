@@ -1,7 +1,7 @@
 import { ThemedView } from "@/components/ThemedView";
 import { ThemedText } from "@/components/ThemedText";
 import { Modal, StyleSheet, TouchableOpacity } from "react-native";
-import { useConduitModal } from "@/context/ConduitBendingModal";
+import { useWireModal } from "@/context/WireCalcModal";
 import { useState } from "react";
 import React from "react";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
@@ -10,8 +10,8 @@ import WireSizingAndDerating from "@/components/WireSizingAndDerating";
 import ConduitFill from "@/components/ConduitFill";
 
 
-export default function Conduit() {
-    const { modalVisible, openModal } = useConduitModal();
+export default function Wire() {
+    const { modalVisible, openModal } = useWireModal();
     const [content, setContent] = useState(<></>);
     
 

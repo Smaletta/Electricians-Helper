@@ -2,10 +2,9 @@ import { ThemedText } from "@/components/ThemedText";
 import { ThemedTextInput } from "@/components/ThemedTextInput";
 import { ThemedView } from "@/components/ThemedView";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
-import * as  mathjs from "mathjs";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { StyleSheet, TouchableOpacity, Switch } from "react-native";
-import { useConduitModal } from "@/context/ConduitBendingModal";
+import { useWireModal } from "@/context/WireCalcModal";
 import { Button } from "@react-navigation/elements";
 import useCheckForFloat from "@/hooks/useCheckForFloat";
 
@@ -18,7 +17,7 @@ export default function VoltageDrop() {
     const [P, setP] = useState(true);
     const [L, setL] = useState("");
     const [selectedButton, setSelectedButton] = useState("");
-    const { closeModal } = useConduitModal();
+    const { closeModal } = useWireModal();
 
     const changeSelectedButton = (size: string) => {
         setCS(size);

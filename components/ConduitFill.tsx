@@ -4,7 +4,7 @@ import { ThemedView } from "@/components/ThemedView";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import { useEffect, useState } from "react";
 import { Modal, StyleSheet, TouchableOpacity, Switch, FlatList } from "react-native";
-import { useConduitModal } from "@/context/ConduitBendingModal";
+import { useWireModal } from "@/context/WireCalcModal";
 import { Button } from "@react-navigation/elements";
 import useCheckForFloat from "@/hooks/useCheckForFloat";
 import { WireSizeTypes, ConduitSizeTables } from "@/data/ConduitSizeTables";
@@ -23,7 +23,7 @@ export default function ConduitFill() {
     const [WireTypeModalVisible, setWireTypeModalVisible] = useState(false);
     const [WireSizeModalVisible, setWireSizeModalVisible] = useState(false);
     const [ConduitModalVisible, setConduitModalVisible] = useState(false);
-    const { closeModal } = useConduitModal();
+    const { closeModal } = useWireModal();
 
     function WireSelectionModal() {
         const keys = Object.keys(WireSizeTypes);
